@@ -9,7 +9,6 @@ class MealItem extends StatelessWidget {
   final int duration;
   final Complexity complexity;
   final Affordability affordability;
-  final Function resultfun;
   MealItem({
     this.id,
     this.title,
@@ -17,7 +16,6 @@ class MealItem extends StatelessWidget {
     this.affordability,
     this.complexity,
     this.imageUrl,
-    this.resultfun,
   });
   String get complexityText {
     switch (complexity) {

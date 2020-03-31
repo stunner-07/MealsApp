@@ -5,7 +5,7 @@ class MealDetailScreen extends StatelessWidget {
   static const routeName = '/mealDetail';
   final Function toggleFav;
   final Function isFav;
-  MealDetailScreen(this.toggleFav,this.isFav);
+  MealDetailScreen(this.toggleFav, this.isFav);
   Widget buildTitle(BuildContext ctx, String title) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
@@ -76,9 +76,10 @@ class MealDetailScreen extends StatelessWidget {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          child: Icon(
-            isFav(id)?Icons.star:Icons.star_border),
-          onPressed: ()=>toggleFav(id),
-        ));
+        child: Icon(
+           isFav(id) ? Icons.star : Icons.star_border,
+        ),
+        onPressed: () => toggleFav(id),
+      ),);
   }
 }

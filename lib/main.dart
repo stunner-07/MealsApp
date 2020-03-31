@@ -24,8 +24,8 @@ class _MyAppState extends State<MyApp> {
   List<Meals> availablemeals = DUMMY_MEALS;
   List<Meals> favouriteMeals = [];
   void _setFilters(Map<String, bool> filterData) {
-    filters = filterData;
     setState(() {
+      filters = filterData;
       availablemeals.where((meal) {
         if (filters['gluten'] && !meal.isGlutenFree) return false;
         if (filters['lactose'] && !meal.isLactoseFree) return false;
@@ -37,27 +37,42 @@ class _MyAppState extends State<MyApp> {
   }
  
 
-  void _toggleFavourite(String mealId) {
+  void _toggleFavorite(String mealId) {
+   
     final existingIndex =
         favouriteMeals.indexWhere((meal) => meal.id == mealId);
+        // print(existingIndex);
+        // print(mealId);
+
     if (existingIndex >= 0) {
+      //  print ('hello');
       setState(() {
         favouriteMeals.removeAt(existingIndex);
       });
     } else {
+      // print ('hello2.0');
       setState(() {
-        favouriteMeals.add(DUMMY_MEALS.firstWhere((meal) => meal.id == mealId));
+        //  print ('hello2.1');
+        favouriteMeals.add(
+          DUMMY_MEALS.firstWhere((meal) => meal.id == mealId)
+        );
+        
+      
       });
+      print(favouriteMeals);
     }
   }
- bool isFav(String id){
-    return favouriteMeals.any((meal)=>meal.id==id);
+
+  bool _isMealFavorite(String id) {
+     print ('hello3');
+    return favouriteMeals.any((meal) => meal.id == id);
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Meals',
       theme: ThemeData(
         primarySwatch: Colors.red,
         accentColor: Colors.amber,
@@ -77,10 +92,10 @@ class _MyAppState extends State<MyApp> {
         '/': (ctx) => TabsScreen(favouriteMeals),
         CategoryMealsScreen.routeName: (ctx) =>
             CategoryMealsScreen(availablemeals),
-        MealDetailScreen.routeName: (ctx) => MealDetailScreen(_toggleFavourite,isFav),
-        FilterScreen.routeName: (ctx) => FilterScreen(filters, _setFilters),
+        MealDetailScreen.routeName: (ctx) => MealDetailScreen(_toggleFavorite,_isMealFavorite),
+        FiltersScreen.routeName: (ctx) => FiltersScreen(filters, _setFilters),
       },
-      onGenerateRoute: (_) {
+      onUnknownRoute: (_) {
         return MaterialPageRoute(
             builder: (ctx) => CategoryMealsScreen(availablemeals));
       },
